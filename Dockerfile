@@ -21,16 +21,16 @@ PYSETUP_PATH="/opt/pysetup" \
 VENV_PATH="/opt/pysetup/.venv"
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
-RUN apt-get update
-&& apt-get install --no-install-recommends -y
-curl
+RUN apt-get update \
+&& apt-get install --no-install-recommends -y \
+curl \
 build-essential
 
 RUN pip install poetry
 RUN poetry init
 
-RUN apt-get update
-&& apt-get -y install libpq-dev gcc
+RUN apt-get update \
+&& apt-get -y install libpq-dev gcc \
 && pip install psycopg2
 
 WORKDIR $PYSETUP_PATH
