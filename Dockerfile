@@ -27,7 +27,8 @@ curl \
 build-essential
 
 RUN pip install poetry
-RUN poetry init
+COPY pyproject.toml poetry.lock* ./
+RUN poetry install --no-root
 
 RUN apt-get update \
 && apt-get -y install libpq-dev gcc \
