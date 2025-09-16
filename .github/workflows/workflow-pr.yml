@@ -44,7 +44,7 @@ jobs:
     - name: Set up environment variables
       run: |
         echo "DATABASE_URL=postgresql://bookstore_dev:bookstore_dev@localhost:5432/bookstore_dev_db" >> $GITHUB_ENV
-        echo "DEBUG=True" >> $GITHUB_ENV
+        echo "DEBUG=1" >> $GITHUB_ENV
         echo "SECRET_KEY=test-secret-key-for-ci-$GITHUB_RUN_ID" >> $GITHUB_ENV
 
     - name: Run database migrations
