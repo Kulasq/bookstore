@@ -401,7 +401,22 @@ files = [
     {file = "tzdata-2025.2.tar.gz", hash = "sha256:b60a638fcc0daffadf82fe0f57e53d06bdec2f36c4df66280ae79bce6bd6f2b9"},
 ]
 
+[[package]]
+name = "whitenoise"
+version = "6.10.0"
+description = "Radically simplified static file serving for WSGI applications"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "whitenoise-6.10.0-py3-none-any.whl", hash = "sha256:bad74a40b33b055ba59731b6048dd08d5647f273b72bef922aa43ddd287b02da"},
+    {file = "whitenoise-6.10.0.tar.gz", hash = "sha256:7b7e53de65d749cb1ce4a7100e751d9742e323b52746f9f93944c0d348ea2d02"},
+]
+
+[package.extras]
+brotli = ["brotli"]
+
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13,<4.0"
-content-hash = "6866f91cbdf7090bf7ad665e488c582c1335b5033cf381d5abe1ea6751bbf873"
+content-hash = "d7953d253914ab65e1b71141e1e72f6d64516ecaaef11f1d024b218512489a43"
