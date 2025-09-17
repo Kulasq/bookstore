@@ -1,0 +1,65 @@
+name: Python Pull Request Workflow
+
+on: [pull_request]
+
+jobs:
+  quality-check:
+    name: Quality check
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15.0-alpine
+        env:
+          POSTGRES_USER: bookstore_dev
+          POSTGRES_PASSWORD: bookstore_dev
+          POSTGRES_DB: bookstore_dev_db
+        options: >-
+          --health-cmd="pg_isready -U bookstore_dev -d bookstore_dev_db"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.13"
+
+    - name: Install poetry
+      run: |
+        pip install -U pip
+        pip install poetry
+
+    - name: Configure poetry
+      run: poetry config virtualenvs.create false
+
+    - name: Install dependencies
+      run: poetry install
+
+    - name: Set up environment variables
+      run: |
+        echo "DATABASE_URL=postgresql://bookstore_dev:bookstore_dev@localhost:5432/bookstore_dev_db" >> $GITHUB_ENV
+        echo "DEBUG=1" >> $GITHUB_ENV
+        echo "SECRET_KEY=test-secret-key-for-ci-$GITHUB_RUN_ID" >> $GITHUB_ENV
+
+    - name: Run database migrations
+      run: poetry run python manage.py migrate
+
+    - name: Run tests
+      run: poetry run python manage.py test
+
+    - name: Run flake8 linting (non-blocking)
+      run: poetry run flake8 . || true
+
+    - name: Wemake Python Styleguide
+      uses: wemake-services/wemake-python-styleguide@0.16.0
+      with:
+        reporter: 'github-pr-review'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      continue-on-error: true
