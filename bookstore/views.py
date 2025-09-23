@@ -1,31 +1,27 @@
 from django.http import HttpResponse
-from django.views import View
-import subprocess
-import os
+from django.template import loader
+from django.views.decorators.csrf import csrf_exempt
+
+import git
 
 
-class UpdateServerView(View):
-    def post(self, request, *args, **kwargs):
-        try:
-            commands = [
-                'cd /home/kulasq/bookstore',
-                'git pull origin main',
-                'source /home/kulasq/env/bin/activate',
-                'pip install -r requirements.txt',
-                'python manage.py collectstatic --noinput',
-            ]
+@csrf_exempt
+def update(request):
+    if request.method == "POST":
+        '''
+        pass the path of the diectory where your project will be
+        stored on PythonAnywhere in the git.Repo() as parameter.
+        Here the name of my directory is "test.pythonanywhere.com"
+        '''
+        repo = git.Repo('/home/drsantos20/bookstore')
+        origin = repo.remotes.origin
 
-            for cmd in commands:
-                subprocess.run(cmd, shell=True, check=True)
-
-            return HttpResponse('Deploy realizado com sucesso!', status=200)
-        except Exception as e:
-            return HttpResponse(f'Erro no deploy: {str(e)}', status=500)
-
-
-def update_server(request):
-    return UpdateServerView.as_view()(request)
+        origin.pull()
+        return HttpResponse("Updated code on PythonAnywhere")
+    else:
+        return HttpResponse("Couldn't update the code on PythonAnywhere")
 
 
 def hello_world(request):
-    return HttpResponse('Hello, World! v1 - Deploy Automático Funcionando!')
+  template = loader.get_template('hello_world.html')
+  return HttpResponse(template.render())
