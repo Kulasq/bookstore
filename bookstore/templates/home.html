@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bookstore API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .endpoint {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        h1 { color: #333; }
+        .tech { background: #e9ecef; padding: 2px 6px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>📚 Bookstore API</h1>
+    <p>Esta é uma API RESTful desenvolvida com <span class="tech">Django REST Framework</span> para gerenciamento de livraria.</p>
+
+    <div class="endpoint">
+        <h3>🔗 Endpoints da API:</h3>
+        <ul>
+            <li><strong>Products:</strong> <a href="{{ api_products_url }}">{{ api_products_url }}</a></li>
+            <li><strong>Orders:</strong> <a href="{{ api_orders_url }}">{{ api_orders_url }}</a></li>
+            <li><strong>Admin:</strong> <a href="{{ admin_url }}">{{ admin_url }}</a> (acesso restrito)</li>
+        </ul>
+    </div>
+
+    <div class="endpoint">
+        <h3>🚀 Tecnologias Utilizadas:</h3>
+        <p>
+            <span class="tech">Python</span>
+            <span class="tech">Django</span>
+            <span class="tech">Django REST Framework</span>
+            <span class="tech">SQLite</span>
+            <span class="tech">PythonAnywhere</span>
+        </p>
+    </div>
+</body>
+</html>
